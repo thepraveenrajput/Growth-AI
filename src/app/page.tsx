@@ -3,22 +3,22 @@
 import React, { useState, useEffect } from 'react';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  BarChart, Bar, Cell, LineChart, Line, Legend
+  LineChart, Line, Legend
 } from 'recharts';
 import { 
-  ArrowUpRight, AlertCircle, RefreshCw, Activity, TrendingUp,
-  ArrowRight, ShieldCheck, HelpCircle
+  ArrowUpRight, AlertCircle, RefreshCw, ChevronRight, 
+  ShieldCheck, TrendingUp, Info, HelpCircle
 } from 'lucide-react';
 import Link from 'next/link';
 
-// Custom Human-made Monospace Tooltip for Recharts
+// Custom Fintech Monospace Tooltip
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-3.5 shadow-2xl font-mono text-[10px]">
-        <p className="text-zinc-500 mb-2 border-b border-zinc-850 pb-1">{label}</p>
+      <div className="bg-zinc-900 border border-zinc-800 rounded p-2.5 shadow-xl font-mono text-[9px]">
+        <p className="text-zinc-500 mb-1 pb-1 border-b border-zinc-850">{label}</p>
         {payload.map((p: any, idx: number) => (
-          <p key={idx} style={{ color: p.color }} className="font-semibold py-0.5">
+          <p key={idx} style={{ color: p.color }} className="font-bold">
             {p.name}: {p.name.includes('Rate') ? `${p.value}%` : `₹${Math.round(p.value).toLocaleString('en-IN')}`}
           </p>
         ))}
@@ -28,11 +28,16 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
+// Lakhs Formatting helper
+const formatLakhs = (val: number) => {
+  if (val >= 100000) {
+    return `₹${(val / 100000).toFixed(2)}L`;
+  }
+  return `₹${Math.round(val).toLocaleString('en-IN')}`;
+};
+
 export default function Dashboard() {
   const [timeRange, setTimeRange] = useState('30');
-  const [paymentMethod, setPaymentMethod] = useState('');
-  const [segment, setSegment] = useState('');
-  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
@@ -48,8 +53,6 @@ export default function Dashboard() {
       const queryParams = new URLSearchParams();
       queryParams.append('startDate', start.toISOString().split('T')[0]);
       queryParams.append('endDate', now.toISOString().split('T')[0]);
-      if (paymentMethod) queryParams.append('paymentMethod', paymentMethod);
-      if (segment) queryParams.append('customerSegment', segment);
 
       const res = await fetch(`/api/dashboard?${queryParams.toString()}`);
       if (!res.ok) {
@@ -66,29 +69,13 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchDashboardData();
-  }, [timeRange, paymentMethod, segment]);
-
-  // Premium silver and warm-gold design colors
-  const colors = {
-    primary: '#f59e0b', // Amber-Gold
-    success: '#10b981', // Sage Emerald
-    failed: '#f43f5e',  // Rust Tomato
-    purple: '#a1a1aa',  // Matte Silver
-    neutral: '#27272a',
-  };
-
-  const paymentMethodColors: { [key: string]: string } = {
-    UPI: '#a1a1aa', // Silver
-    CARD: '#71717a', // Slate
-    NETBANKING: '#52525b', // Dark Slate
-    WALLET: '#27272a', // Charcoal
-  };
+  }, [timeRange]);
 
   if (loading && !data) {
     return (
       <div className="flex-1 flex flex-col justify-center items-center h-full bg-zinc-950 text-zinc-400">
-        <RefreshCw className="w-8 h-8 animate-spin text-zinc-400 mb-3" />
-        <p className="text-xs font-mono tracking-wider">LOADING PAYMENT DATASTREAM...</p>
+        <RefreshCw className="w-5 h-5 animate-spin text-zinc-550 mb-2" />
+        <p className="text-[10px] font-mono tracking-wider">RETRIEVING DASHBOARD METRICS...</p>
       </div>
     );
   }
@@ -96,12 +83,12 @@ export default function Dashboard() {
   if (error) {
     return (
       <div className="flex-1 flex flex-col justify-center items-center h-full bg-zinc-950 p-6">
-        <AlertCircle className="w-10 h-10 text-rose-500 mb-3" />
-        <h3 className="text-sm font-bold text-white mb-1">Failed to Load Dashboard</h3>
-        <p className="text-zinc-500 text-xs text-center max-w-sm mb-6">{error}</p>
+        <AlertCircle className="w-8 h-8 text-rose-500 mb-2" />
+        <h3 className="text-xs font-bold text-white mb-1">Failed to load payment analytics</h3>
+        <p className="text-zinc-550 text-[10px] text-center max-w-sm mb-4">{error}</p>
         <button 
           onClick={fetchDashboardData}
-          className="px-4 py-2 bg-zinc-900 border border-zinc-800 text-white rounded-lg hover:border-zinc-700 text-xs font-semibold transition-colors"
+          className="px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-[11px] text-white rounded hover:border-zinc-700 transition-colors"
         >
           Try Again
         </button>
@@ -112,154 +99,162 @@ export default function Dashboard() {
   const { summary, paymentMethods, failureReasons, hourlyPerformance, dailyTrend } = data;
 
   return (
-    <div className="flex-1 flex flex-col overflow-y-auto">
-      {/* Header Panel */}
-      <header className="px-8 py-7 bg-zinc-900/40 border-b border-zinc-900 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div className="flex-1 flex flex-col overflow-y-auto bg-zinc-950">
+      {/* Workspace Header */}
+      <div className="px-8 pt-8 pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-lg font-bold text-white tracking-tight">Payments Health Overview</h1>
-          <p className="text-[10px] text-zinc-500 font-mono mt-0.5">DETERMINISTIC ANALYTICS FEED • MERCHANT DEMO PLATFORM</p>
+          <h2 className="text-base font-bold text-white tracking-tight">Good morning, Merchant</h2>
+          <p className="text-xs text-zinc-400 mt-0.5">Here&apos;s what changed in your payments today.</p>
         </div>
 
-        {/* Filter bar */}
-        <div className="flex flex-wrap items-center gap-2">
-          <div>
-            <select
-              value={timeRange}
-              onChange={(e) => setTimeRange(e.target.value)}
-              className="bg-zinc-900 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-300 focus:outline-none focus:border-zinc-700 font-mono"
-            >
-              <option value="7">Last 7d</option>
-              <option value="14">Last 14d</option>
-              <option value="30">Last 30d</option>
-            </select>
-          </div>
-
-          <div>
-            <select
-              value={paymentMethod}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-              className="bg-zinc-900 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-300 focus:outline-none focus:border-zinc-700 font-mono"
-            >
-              <option value="">All Methods</option>
-              <option value="UPI">UPI</option>
-              <option value="CARD">Cards</option>
-              <option value="NETBANKING">Netbanking</option>
-              <option value="WALLET">Wallets</option>
-            </select>
-          </div>
-
-          <div>
-            <select
-              value={segment}
-              onChange={(e) => setSegment(e.target.value)}
-              className="bg-zinc-900 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-300 focus:outline-none focus:border-zinc-700 font-mono"
-            >
-              <option value="">All Segments</option>
-              <option value="SMB">SMB</option>
-              <option value="Mid-Market">Mid-Market</option>
-              <option value="Enterprise">Enterprise</option>
-            </select>
-          </div>
-
+        <div className="flex items-center gap-2">
+          <select
+            value={timeRange}
+            onChange={(e) => setTimeRange(e.target.value)}
+            className="bg-zinc-900 border border-zinc-800 rounded px-2.5 py-1 text-xs text-zinc-300 focus:outline-none focus:border-zinc-750 font-mono"
+          >
+            <option value="7">Last 7 Days</option>
+            <option value="14">Last 14 Days</option>
+            <option value="30">Last 30 Days</option>
+          </select>
           <button 
             onClick={fetchDashboardData}
-            className="p-2 bg-zinc-900 border border-zinc-800 text-zinc-400 rounded-lg hover:text-white transition-colors"
-            title="Refresh statistics"
+            className="p-1.5 bg-zinc-900 border border-zinc-800 text-zinc-400 rounded hover:text-white transition-colors"
           >
             <RefreshCw className="w-3.5 h-3.5" />
           </button>
         </div>
-      </header>
+      </div>
 
-      {/* Analytics Summary - Top Border Plates (Vercel Style) */}
-      <section className="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5">
-        {/* Total attempted volume */}
-        <div className="bg-zinc-900/50 border border-zinc-900 border-t-2 border-t-zinc-600 rounded-lg p-5 flex flex-col justify-between shadow-sm">
-          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">Attempted GMV</span>
-          <div className="mt-3">
-            <h3 className="text-base font-bold text-white tracking-tight">₹{summary.totalVolume.toLocaleString('en-IN')}</h3>
-            <p className="text-[9px] font-mono text-zinc-500 mt-1">{summary.transactionCount.toLocaleString()} orders</p>
-          </div>
-        </div>
-
-        {/* Realized Volume */}
-        <div className="bg-zinc-900/50 border border-zinc-900 border-t-2 border-t-emerald-500 rounded-lg p-5 flex flex-col justify-between shadow-sm">
-          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">Successful GMV</span>
-          <div className="mt-3">
-            <h3 className="text-base font-bold text-emerald-400 tracking-tight">₹{summary.successfulVolume.toLocaleString('en-IN')}</h3>
-            <p className="text-[9px] font-mono text-zinc-500 mt-1">{summary.successfulCount.toLocaleString()} successful</p>
-          </div>
-        </div>
-
-        {/* Success Rate */}
-        <div className="bg-zinc-900/50 border border-zinc-900 border-t-2 border-t-zinc-400 rounded-lg p-5 flex flex-col justify-between shadow-sm">
-          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">Success Rate</span>
-          <div className="mt-3">
-            <h3 className="text-xl font-black text-white tracking-tighter">{summary.successRate}%</h3>
-            <div className="w-full bg-zinc-850 rounded-full h-1 mt-2.5 overflow-hidden">
-              <div 
-                className="bg-zinc-400 h-1 rounded-full" 
-                style={{ width: `${summary.successRate}%` }}
-              />
+      {/* WHAT NEEDS YOUR ATTENTION (Priority Revenue Leak Alert Panel) */}
+      <section className="px-8 py-3">
+        <div className="bg-zinc-900 border border-zinc-800/80 rounded-lg p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[8px] px-1.5 py-0.5 bg-rose-500/10 text-rose-500 border border-rose-500/20 rounded font-mono font-bold tracking-wider uppercase">
+                High Priority Alert
+              </span>
+              <span className="text-[10px] text-zinc-500 font-mono">• UPI • Yesterday</span>
             </div>
+            <h3 className="text-xs font-bold text-white leading-normal">
+              Payment success rate dropped 6.4% during 7–10 PM (Evening Node Congestion)
+            </h3>
+            <p className="text-[10px] text-zinc-400 font-mono">
+              Estimated affected volume: <span className="text-white font-bold">{formatLakhs(84200)}</span>
+            </p>
           </div>
-        </div>
-
-        {/* Failed Volume */}
-        <div className="bg-zinc-900/50 border border-zinc-900 border-t-2 border-t-rose-500 rounded-lg p-5 flex flex-col justify-between shadow-sm">
-          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">Failed Volume</span>
-          <div className="mt-3">
-            <h3 className="text-base font-bold text-rose-400 tracking-tight">₹{summary.failedVolume.toLocaleString('en-IN')}</h3>
-            <p className="text-[9px] font-mono text-zinc-500 mt-1">{summary.failedCount.toLocaleString()} failures</p>
-          </div>
-        </div>
-
-        {/* ATV */}
-        <div className="bg-zinc-900/50 border border-zinc-900 border-t-2 border-t-zinc-700 rounded-lg p-5 flex flex-col justify-between shadow-sm">
-          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">Avg Order Value</span>
-          <div className="mt-3">
-            <h3 className="text-base font-bold text-white tracking-tight">₹{summary.averageTransactionValue.toLocaleString('en-IN')}</h3>
-            <p className="text-[9px] font-mono text-zinc-500 mt-1">Median: ₹{summary.medianTransactionValue.toLocaleString('en-IN')}</p>
-          </div>
-        </div>
-
-        {/* Potential Revenue Opportunity (Gold Glowing Plate) */}
-        <div className="border border-amber-500/10 bg-amber-500/[0.02] rounded-lg p-5 flex flex-col justify-between shadow-lg relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-amber-500/5 rounded-full blur-xl" />
-          <span className="text-[10px] font-mono text-amber-400 uppercase tracking-wider">Revenue leak</span>
-          <div className="mt-3 z-10">
-            <h3 className="text-base font-extrabold text-amber-500 tracking-tight">₹{summary.potentialRevenueOpportunity.toLocaleString('en-IN')}</h3>
+          
+          <div className="flex items-center gap-3">
             <Link 
-              href="/opportunities" 
-              className="inline-flex items-center gap-0.5 text-[9px] font-mono font-bold text-amber-400 hover:text-amber-300 mt-2 transition-colors uppercase tracking-wider"
+              href="/agent?query=Why+did+my+payment+success+rate+fall+yesterday"
+              className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/25 text-amber-500 rounded text-xs font-bold transition-all duration-150"
             >
-              Analyze Opportunity <ArrowUpRight className="w-2.5 h-2.5" />
+              Investigate
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Charts Grid */}
-      <section className="px-8 pb-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Realized Volume Area Chart (2 columns wide) */}
-        <div className="bg-zinc-900/30 border border-zinc-900 rounded-xl p-6 lg:col-span-2 shadow-sm flex flex-col">
-          <div className="mb-6">
-            <h3 className="text-sm font-bold text-white">Daily Realized Volume & Performance</h3>
-            <p className="text-[9px] font-mono text-zinc-500 mt-0.5">MONITORING REVENUE VELOCITY AND TRANSACTION GATEWAY DYNAMICS</p>
+      {/* KPI Stats Section - Human-crafted Clean Cards */}
+      <section className="px-8 py-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {/* Metric 1 */}
+        <div className="bg-zinc-900/30 border border-zinc-900 rounded p-4 flex flex-col justify-between h-28">
+          <span className="text-[10px] font-mono text-zinc-550 uppercase tracking-wider">Payment Volume</span>
+          <div className="mt-2">
+            <div className="text-lg font-bold text-white tracking-tight">{formatLakhs(summary.totalVolume)}</div>
+            <div className="text-[9px] font-mono text-emerald-500 mt-1 flex items-center gap-0.5">
+              ↑ 8.2% vs prev
+            </div>
           </div>
-          <div className="h-72 w-full">
+        </div>
+
+        {/* Metric 2 */}
+        <div className="bg-zinc-900/30 border border-zinc-900 rounded p-4 flex flex-col justify-between h-28">
+          <span className="text-[10px] font-mono text-zinc-550 uppercase tracking-wider">Success Rate</span>
+          <div className="mt-2">
+            <div className="text-lg font-bold text-white tracking-tight">{summary.successRate}%</div>
+            <div className="text-[9px] font-mono text-rose-500 mt-1 flex items-center gap-0.5">
+              ↓ 2.4% vs prev
+            </div>
+          </div>
+        </div>
+
+        {/* Metric 3 */}
+        <div className="bg-zinc-900/30 border border-zinc-900 rounded p-4 flex flex-col justify-between h-28">
+          <span className="text-[10px] font-mono text-zinc-550 uppercase tracking-wider">Successful Payments</span>
+          <div className="mt-2">
+            <div className="text-lg font-bold text-white tracking-tight">
+              {summary.successfulCount.toLocaleString()}
+            </div>
+            <p className="text-[8px] text-zinc-500 font-mono mt-1 uppercase">Settled Transactions</p>
+          </div>
+        </div>
+
+        {/* Metric 4 */}
+        <div className="bg-zinc-900/30 border border-zinc-900 rounded p-4 flex flex-col justify-between h-28">
+          <span className="text-[10px] font-mono text-zinc-550 uppercase tracking-wider">Failed Payments</span>
+          <div className="mt-2">
+            <div className="text-lg font-bold text-rose-450 tracking-tight">
+              {summary.failedCount.toLocaleString()}
+            </div>
+            <p className="text-[8px] text-zinc-500 font-mono mt-1 uppercase">Declined Transactions</p>
+          </div>
+        </div>
+
+        {/* Metric 5 */}
+        <div className="bg-zinc-900/30 border border-zinc-900 rounded p-4 flex flex-col justify-between h-28">
+          <span className="text-[10px] font-mono text-zinc-550 uppercase tracking-wider">Avg Transaction</span>
+          <div className="mt-2">
+            <div className="text-lg font-bold text-white tracking-tight">₹{summary.averageTransactionValue.toFixed(0)}</div>
+            <p className="text-[8px] text-zinc-500 font-mono mt-1 uppercase">Ticket Size (ATV)</p>
+          </div>
+        </div>
+
+        {/* Metric 6 */}
+        <div className="bg-zinc-900/30 border border-zinc-900 rounded p-4 flex flex-col justify-between h-28">
+          <span className="text-[10px] font-mono text-amber-500 uppercase tracking-wider font-semibold">Revenue Opportunity</span>
+          <div className="mt-2">
+            <div className="text-lg font-extrabold text-amber-500 tracking-tight">{formatLakhs(summary.potentialRevenueOpportunity)}</div>
+            <Link href="/opportunities" className="text-[8px] text-amber-500 font-bold font-mono mt-1 block uppercase hover:underline">
+              View Leaks →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Insights Banner */}
+      <section className="px-8 py-2">
+        <div className="border border-zinc-900 bg-zinc-900/10 rounded p-4 flex items-start gap-3">
+          <Info className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+          <div className="text-xs text-zinc-400">
+            <span className="text-white font-bold">Health check:</span> Success rate is currently at {summary.successRate}%. The decline is concentrated primarily between 7 PM and 10 PM. Check your <Link href="/opportunities" className="text-amber-500 hover:underline">Opportunities tab</Link> to apply routing fixes.
+          </div>
+        </div>
+      </section>
+
+      {/* Main Charts & Analytics Workspace */}
+      <section className="p-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        {/* Realized Volume line chart (2 Columns wide) */}
+        <div className="bg-zinc-900/30 border border-zinc-900 rounded-lg p-6 lg:col-span-2 shadow-sm">
+          <div className="mb-6">
+            <h3 className="text-xs font-bold text-white uppercase font-mono tracking-wider">Revenue & Success Rate Velocity</h3>
+            <p className="text-[9px] text-zinc-500 font-mono uppercase mt-0.5">30 Day Realized volume against conversion health</p>
+          </div>
+
+          <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={dailyTrend} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+              <AreaChart data={dailyTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="gmvGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={colors.primary} stopOpacity={0.15}/>
-                    <stop offset="100%" stopColor={colors.primary} stopOpacity={0}/>
+                    <stop offset="0%" stopColor="#f59e0b" stopOpacity={0.12}/>
+                    <stop offset="100%" stopColor="#f59e0b" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="4 4" stroke="#1f2937" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
                 <XAxis 
                   dataKey="date" 
-                  stroke="#475569" 
+                  stroke="#52525b" 
                   fontSize={8} 
                   fontFamily="monospace"
                   tickLine={false}
@@ -268,103 +263,95 @@ export default function Dashboard() {
                     return parts.length === 3 ? `${parts[2]}/${parts[1]}` : val;
                   }}
                 />
-                <YAxis yAxisId="left" stroke="#475569" fontSize={8} fontFamily="monospace" tickLine={false} />
-                <YAxis yAxisId="right" orientation="right" stroke="#475569" fontSize={8} fontFamily="monospace" tickLine={false} domain={[50, 100]} />
+                <YAxis yAxisId="left" stroke="#52525b" fontSize={8} fontFamily="monospace" tickLine={false} />
+                <YAxis yAxisId="right" orientation="right" stroke="#52525b" fontSize={8} fontFamily="monospace" tickLine={false} domain={[60, 100]} />
                 <Tooltip content={<CustomTooltip />} />
-                <Area yAxisId="left" type="monotone" dataKey="volume" name="GMV (₹)" stroke={colors.primary} fillOpacity={1} fill="url(#gmvGradient)" strokeWidth={1.5} />
-                <Line yAxisId="right" type="monotone" dataKey="successRate" name="Success Rate (%)" stroke={colors.purple} strokeWidth={1.5} dot={false} />
-                <Legend wrapperStyle={{ fontSize: 9, fontFamily: 'monospace', paddingTop: 10 }} />
+                <Area yAxisId="left" type="monotone" dataKey="volume" name="GMV (₹)" stroke="#f59e0b" strokeWidth={1.5} fillOpacity={1} fill="url(#gmvGradient)" />
+                <Line yAxisId="right" type="monotone" dataKey="successRate" name="Success Rate (%)" stroke="#a1a1aa" strokeWidth={1.5} dot={false} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        {/* Failure Reason Breakdown (Handcrafted Progress Bars) */}
-        <div className="bg-zinc-900/30 border border-zinc-900 rounded-xl p-6 shadow-sm flex flex-col justify-between">
+        {/* Right side: Payment Methods Horizontal Progress list */}
+        <div className="bg-zinc-900/30 border border-zinc-900 rounded-lg p-6 shadow-sm flex flex-col justify-between">
           <div>
-            <h3 className="text-sm font-bold text-white">Transactional Failure Distribution</h3>
-            <p className="text-[9px] font-mono text-zinc-500 mb-6 uppercase">Root failure reasons aggregated across filters</p>
-            
-            {failureReasons.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-48 text-zinc-700">
-                <ShieldCheck className="w-8 h-8 text-zinc-800 mb-2" />
-                <p className="text-[10px] font-mono uppercase">All gateways are operating healthy.</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {failureReasons.slice(0, 5).map((f: any, idx: number) => {
-                  return (
-                    <div key={idx} className="text-xs">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="font-semibold text-zinc-300 font-mono text-[10px]">{f.reason}</span>
-                        <span className="text-[9px] font-mono text-zinc-500">{f.count.toLocaleString()} ({f.percentage}%)</span>
-                      </div>
-                      <div className="w-full bg-zinc-950 rounded-full h-1 overflow-hidden">
-                        <div 
-                          className={`h-1 rounded-full ${
-                            f.reason === 'BANK_DEGRADED' ? 'bg-rose-500' :
-                            f.reason === 'INSUFFICIENT_FUNDS' ? 'bg-zinc-400' :
-                            'bg-zinc-700'
-                          }`}
-                          style={{ width: `${f.percentage}%` }}
-                        />
+            <h3 className="text-xs font-bold text-white uppercase font-mono tracking-wider mb-1">Method Performance</h3>
+            <p className="text-[9px] text-zinc-500 font-mono uppercase mb-6">Checkout success rate and volume share</p>
+
+            <div className="space-y-5">
+              {paymentMethods.map((pm: any) => {
+                const isUnderperforming = pm.successRate < 80;
+                return (
+                  <div key={pm.method} className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[10px] font-mono">
+                      <span className="font-bold text-zinc-300">{pm.method}</span>
+                      <div className="space-x-2">
+                        <span className="text-zinc-550">({pm.count.toLocaleString()} txs)</span>
+                        <span className={`font-bold ${isUnderperforming ? 'text-rose-400' : 'text-zinc-100'}`}>
+                          {pm.successRate}%
+                        </span>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            )}
+                    {/* Horizontal Bar */}
+                    <div className="w-full bg-zinc-950 h-2 rounded-full overflow-hidden border border-zinc-900">
+                      <div 
+                        className={`h-2 rounded-full ${
+                          isUnderperforming ? 'bg-rose-500' : 'bg-zinc-400'
+                        }`}
+                        style={{ width: `${pm.successRate}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          
-          <div className="pt-4 border-t border-zinc-900 mt-4 flex items-center justify-between text-[9px] font-mono text-zinc-500">
-            <span>Primary error: <b className="text-rose-400">BANK_DEGRADED</b></span>
-            <Link href="/agent" className="text-amber-500 font-semibold hover:underline flex items-center gap-0.5">
-              Run Diagnostics <ArrowRight className="w-3 h-3" />
-            </Link>
+
+          <div className="pt-4 border-t border-zinc-900 mt-6 flex items-center justify-between text-[9px] font-mono text-zinc-500">
+            <span>Primary leak: <b className="text-rose-400 font-mono">NETBANKING Underperformance</b></span>
           </div>
         </div>
       </section>
 
-      {/* Hourly and Payment Method Grid */}
+      {/* Bottom section: Failure reasons and Hourly breakdown */}
       <section className="px-8 pb-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Hourly success rates (UPI Peak degradation) */}
-        <div className="bg-zinc-900/30 border border-zinc-900 rounded-xl p-6 shadow-sm flex flex-col">
+        {/* Failure Reasons list */}
+        <div className="bg-zinc-900/30 border border-zinc-900 rounded-lg p-6 shadow-sm flex flex-col justify-between">
           <div>
-            <h3 className="text-sm font-bold text-white">Hourly Success Rate Distribution</h3>
-            <p className="text-[9px] font-mono text-zinc-500 mb-6 uppercase">Detects recurrent bank node congestion spikes</p>
-          </div>
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={hourlyPerformance} margin={{ top: 10, right: 10, left: -15, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="4 4" stroke="#1f2937" vertical={false} />
-                <XAxis dataKey="hour" stroke="#475569" fontSize={8} fontFamily="monospace" tickLine={false} tickFormatter={(val) => `${val}h`} />
-                <YAxis stroke="#475569" fontSize={8} fontFamily="monospace" tickLine={false} domain={[60, 100]} />
-                <Tooltip content={<CustomTooltip />} />
-                <Line type="monotone" dataKey="successRate" name="Success Rate (%)" stroke={colors.primary} strokeWidth={1.5} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
+            <h3 className="text-xs font-bold text-white uppercase font-mono tracking-wider mb-1">Failure Reason Rankings</h3>
+            <p className="text-[9px] text-zinc-500 font-mono uppercase mb-6">Distribution of transaction errors</p>
+
+            <div className="divide-y divide-zinc-900">
+              {failureReasons.slice(0, 5).map((f: any, idx: number) => (
+                <div key={idx} className="flex justify-between items-center py-2.5 first:pt-0 last:pb-0 text-xs">
+                  <span className="font-mono text-zinc-300">{f.reason}</span>
+                  <div className="text-right font-mono text-[10px] space-x-3">
+                    <span className="text-zinc-500">{f.count.toLocaleString()} attempts</span>
+                    <span className="font-bold text-zinc-200">{f.percentage}%</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Payment Method success rates bar chart */}
-        <div className="bg-zinc-900/30 border border-zinc-900 rounded-xl p-6 shadow-sm flex flex-col">
-          <div>
-            <h3 className="text-sm font-bold text-white">Performance by Payment Method</h3>
-            <p className="text-[9px] font-mono text-zinc-500 mb-6 uppercase">Successful conversion rate by checkout method</p>
+        {/* Hourly Trend Line chart */}
+        <div className="bg-zinc-900/30 border border-zinc-900 rounded-lg p-6 shadow-sm flex flex-col">
+          <div className="mb-6">
+            <h3 className="text-xs font-bold text-white uppercase font-mono tracking-wider">Hourly Performance Distribution</h3>
+            <p className="text-[9px] text-zinc-500 font-mono uppercase mt-0.5">Highlights cyclical evening transaction dips</p>
           </div>
-          <div className="h-64 w-full">
+
+          <div className="h-48 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={paymentMethods} margin={{ top: 10, right: 10, left: -15, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="4 4" stroke="#1f2937" vertical={false} />
-                <XAxis dataKey="method" stroke="#475569" fontSize={8} fontFamily="monospace" tickLine={false} />
-                <YAxis stroke="#475569" fontSize={8} fontFamily="monospace" tickLine={false} domain={[0, 100]} />
+              <LineChart data={hourlyPerformance} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
+                <XAxis dataKey="hour" stroke="#52525b" fontSize={8} fontFamily="monospace" tickLine={false} tickFormatter={(val) => `${val}h`} />
+                <YAxis stroke="#52525b" fontSize={8} fontFamily="monospace" tickLine={false} domain={[60, 100]} />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="successRate" name="Success Rate (%)" fill={colors.primary} radius={[2, 2, 0, 0]} barSize={32}>
-                  {paymentMethods.map((entry: any, index: number) => (
-                    <Cell key={`cell-${index}`} fill={paymentMethodColors[entry.method] || colors.primary} />
-                  ))}
-                </Bar>
-              </BarChart>
+                <Line type="monotone" dataKey="successRate" name="Success Rate (%)" stroke="#f59e0b" strokeWidth={1.5} dot={false} />
+              </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
