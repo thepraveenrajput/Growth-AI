@@ -53,12 +53,12 @@ export default function Dashboard() {
 
   // Color constants for charts
   const colors = {
-    primary: '#71717a', // Indigo
+    primary: '#f59e0b', // Indigo
     success: '#10b981', // Emerald
     failed: '#ef4444', // Rose
     warning: '#f59e0b', // Amber
     neutral: '#94a3b8', // Slate
-    purple: '#d4d4d8', // Violet
+    purple: '#e4e4e7', // Violet
   };
 
   const paymentMethodColors: { [key: string]: string } = {

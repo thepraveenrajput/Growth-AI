@@ -52,7 +52,7 @@ export default function Opportunities() {
         
         <button 
           onClick={fetchOpportunities}
-          className="inline-flex items-center gap-2 px-3 py-1.5 bg-zinc-800 border border-zinc-700 text-xs text-zinc-300 rounded-lg hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 px-3 py-1.5 bg-zinc-800 border border-zinc-700 text-xs text-zinc-200 rounded-lg hover:text-white transition-colors"
         >
           <RefreshCw className="w-3.5 h-3.5" /> Re-scan Database
         </button>
@@ -71,7 +71,7 @@ export default function Opportunities() {
           <select
             value={severityFilter}
             onChange={(e) => setSeverityFilter(e.target.value)}
-            className="bg-zinc-800 border border-zinc-700 rounded-lg px-2.5 py-1 text-xs text-zinc-300 focus:outline-none focus:border-violet-500"
+            className="bg-zinc-800 border border-zinc-700 rounded-lg px-2.5 py-1 text-xs text-zinc-200 focus:outline-none focus:border-violet-500"
           >
             <option value="ALL">All Severities</option>
             <option value="HIGH">High Severity</option>
@@ -86,7 +86,7 @@ export default function Opportunities() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-zinc-800 border border-zinc-700 rounded-lg px-2.5 py-1 text-xs text-zinc-300 focus:outline-none focus:border-violet-500"
+            className="bg-zinc-800 border border-zinc-700 rounded-lg px-2.5 py-1 text-xs text-zinc-200 focus:outline-none focus:border-violet-500"
           >
             <option value="ALL">All Statuses</option>
             <option value="DETECTED">Detected</option>
@@ -151,7 +151,7 @@ export default function Opportunities() {
                       {/* Status */}
                       <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
                         isActioned ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/25' :
-                        o.status === 'INVESTIGATING' ? 'bg-zinc-800 text-zinc-300 border border-zinc-700 animate-pulse' :
+                        o.status === 'INVESTIGATING' ? 'bg-zinc-800 text-zinc-200 border border-zinc-700 animate-pulse' :
                         'bg-blue-500/10 text-blue-400 border border-blue-500/25'
                       }`}>
                         {o.status}
@@ -205,7 +205,7 @@ export default function Opportunities() {
                     ) : (
                       <Link 
                         href="/agent"
-                        className="inline-flex items-center gap-1 text-xs font-bold text-zinc-300 hover:underline"
+                        className="inline-flex items-center gap-1 text-xs font-bold text-zinc-200 hover:underline"
                       >
                         Investigate with AI Agent <ArrowRight className="w-3.5 h-3.5" />
                       </Link>

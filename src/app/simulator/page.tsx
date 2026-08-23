@@ -105,7 +105,7 @@ export default function Simulator() {
               }}
               onMouseUp={handleSliderChange}
               onTouchEnd={handleSliderChange}
-              className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-400"
+              className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
             />
             <div className="flex justify-between text-[9px] text-zinc-500 font-mono">
               <span>75%</span>
@@ -131,7 +131,7 @@ export default function Simulator() {
               }}
               onMouseUp={handleSliderChange}
               onTouchEnd={handleSliderChange}
-              className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-400"
+              className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
             />
             <div className="flex justify-between text-[9px] text-zinc-500 font-mono">
               <span>10K</span>
@@ -156,7 +156,7 @@ export default function Simulator() {
               }}
               onMouseUp={handleSliderChange}
               onTouchEnd={handleSliderChange}
-              className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-400"
+              className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
             />
             <div className="flex justify-between text-[9px] text-zinc-500 font-mono">
               <span>₹100</span>

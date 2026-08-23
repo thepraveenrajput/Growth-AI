@@ -150,7 +150,7 @@ export default function Agent() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-bold text-white">AI Growth Agent</h1>
-            <span className="inline-flex items-center gap-1 text-[10px] bg-zinc-600/10 text-zinc-300 border border-indigo-500/20 px-2 py-0.5 rounded font-semibold font-mono">
+            <span className="inline-flex items-center gap-1 text-[10px] bg-zinc-800 hover:bg-zinc-700 border border-zinc-700/10 text-zinc-300 border border-indigo-500/20 px-2 py-0.5 rounded font-semibold font-mono">
               <Sparkles className="w-2.5 h-2.5" /> AGENTIC ACTIVE
             </span>
           </div>
@@ -166,7 +166,7 @@ export default function Agent() {
             <div key={idx} className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-2xl rounded-xl p-5 ${
                 isUser 
-                  ? 'bg-zinc-800 border border-zinc-700 text-white rounded-tr-none' 
+                  ? 'bg-zinc-900 hover:border-amber-500/40 text-zinc-100 transition-colors text-white rounded-tr-none' 
                   : 'bg-zinc-900 border border-zinc-800 text-zinc-100 rounded-tl-none'
               }`}>
                 {/* Standard Message text */}
@@ -207,7 +207,7 @@ export default function Agent() {
                     )}
 
                     {/* Recommendation Card */}
-                    <div className="border-l-2 border-zinc-400 pl-4 space-y-4">
+                    <div className="border-l-2 border-amber-500 pl-4 space-y-4">
                       {/* Title / Finding */}
                       <div>
                         <span className="text-[9px] font-bold text-zinc-300 uppercase tracking-widest block mb-1">Diagnostic Finding</span>
@@ -290,7 +290,7 @@ export default function Agent() {
                                 </button>
                                 <button
                                   onClick={() => handleAction(linkedRec.id, 'approve')}
-                                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 hover:text-white text-white rounded-lg transition-colors text-xs font-semibold"
+                                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-zinc-900 hover:border-amber-500/40 text-zinc-100 transition-colors hover:bg-zinc-700 hover:text-white text-white rounded-lg transition-colors text-xs font-semibold"
                                 >
                                   <Check className="w-3.5 h-3.5" /> Approve
                                 </button>
@@ -367,7 +367,7 @@ export default function Agent() {
           <button
             type="submit"
             disabled={!inputText.trim() || loading}
-            className="bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 hover:text-white disabled:opacity-50 text-white rounded-xl p-3 flex items-center justify-center transition-all duration-200"
+            className="bg-zinc-900 hover:border-amber-500/40 text-zinc-100 transition-colors hover:bg-zinc-700 hover:text-white disabled:opacity-50 text-white rounded-xl p-3 flex items-center justify-center transition-all duration-200"
           >
             <Send className="w-4 h-4" />
           </button>

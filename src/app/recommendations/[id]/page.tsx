@@ -212,9 +212,9 @@ export default function RecommendationDetail() {
           )}
 
           {/* Impact and metrics */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-lg space-y-6">
+          <div className="bg-zinc-900 border border-amber-500/10 bg-amber-500/[0.01] rounded-xl p-6 shadow-lg space-y-6">
             <div>
-              <span className="text-[9px] text-zinc-500 uppercase tracking-widest font-mono block mb-1">Expected Opportunity</span>
+              <span className="text-[9px] text-amber-400 uppercase tracking-widest font-mono block mb-1">Expected Opportunity</span>
               <h3 className="text-2xl font-black text-emerald-400">
                 ₹{recommendation.estimatedOpportunity.toLocaleString('en-IN')}
               </h3>
@@ -222,11 +222,11 @@ export default function RecommendationDetail() {
             </div>
             
             <div className="pt-4 border-t border-zinc-800">
-              <span className="text-[9px] text-zinc-500 uppercase tracking-widest font-mono block mb-2">Confidence Level</span>
+              <span className="text-[9px] text-amber-400 uppercase tracking-widest font-mono block mb-2">Confidence Level</span>
               <div className="flex items-center gap-3">
                 <div className="text-lg font-bold text-white">{recommendation.confidence}%</div>
                 <div className="flex-1 bg-zinc-800 h-2 rounded-full overflow-hidden">
-                  <div className="bg-zinc-600 h-2 rounded-full" style={{ width: `${recommendation.confidence}%` }} />
+                  <div className="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 h-2 rounded-full" style={{ width: `${recommendation.confidence}%` }} />
                 </div>
               </div>
             </div>
