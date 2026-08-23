@@ -1,0 +1,130 @@
+// Prisma schema for RazorGrowth AI
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Merchant {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  transactions Transaction[]
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  segment   String   // SMB, Mid-Market, Enterprise
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  transactions Transaction[]
+}
+
+model Transaction {
+  id              String   @id @default(uuid())
+  merchantId      String
+  customerId      String
+  amount          Float
+  currency        String   @default("INR")
+  paymentMethod   String   // UPI, CARD, NETBANKING, WALLET
+  status          String   // SUCCESS, FAILED, CHARGED_BACK, REFUNDED
+  failureReason   String?  // BANK_DEGRADED, INSUFFICIENT_FUNDS, NETWORK_TIMEOUT, USER_ABORTED
+  deviceType      String   // MOBILE, DESKTOP, TABLET
+  customerSegment String   // SMB, Mid-Market, Enterprise
+  timestamp       DateTime @default(now())
+  
+  merchant        Merchant @relation(fields: [merchantId], references: [id])
+  customer        Customer @relation(fields: [customerId], references: [id])
+
+  @@index([merchantId])
+  @@index([timestamp])
+  @@index([status])
+  @@index([paymentMethod])
+}
+
+model Opportunity {
+  id             String   @id @default(uuid())
+  title          String
+  type           String   // FAILURE_SPIKE, METHOD_UNDERPERFORMANCE, PEAK_HOUR_FAILURE, HIGH_VALUE_FAILURE, CUSTOMER_DROPOFF, REVENUE_OPPORTUNITY
+  status         String   @default("DETECTED") // DETECTED, INVESTIGATING, RECOMMENDED, ACTIONED
+  severity       String   // HIGH, MEDIUM, LOW
+  priority       String   // HIGH, MEDIUM, LOW
+  evidence       Json     // JSON object describing the metrics
+  affectedCount  Int      @default(0)
+  estimatedValue Float    // Lost volume estimate
+  confidence     Float    // Confidence percentage (0-100)
+  timestamp      DateTime @default(now())
+  
+  recommendations Recommendation[]
+}
+
+model Recommendation {
+  id                   String   @id @default(uuid())
+  opportunityId        String
+  finding              String   @db.Text
+  evidence             String   @db.Text
+  likelyCause          String   @db.Text
+  recommendedAction    String   @db.Text
+  estimatedOpportunity Float
+  confidence           Float
+  status               String   @default("GENERATED") // GENERATED, APPROVED, REJECTED, DISMISSED, IMPLEMENTED
+  feedbackMessage      String?  @db.Text
+  timestamp            DateTime @default(now())
+  
+  opportunity          Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  merchantActions      MerchantAction[]
+
+  @@index([opportunityId])
+}
+
+model AgentRun {
+  id             String   @id @default(uuid())
+  prompt         String   @db.Text
+  response       String   @db.Text
+  timestamp      DateTime @default(now())
+  
+  toolCalls      AgentToolCall[]
+}
+
+model AgentToolCall {
+  id           String   @id @default(uuid())
+  agentRunId   String
+  toolName     String
+  inputParams  Json
+  outputResult Json
+  timestamp    DateTime @default(now())
+  
+  agentRun     AgentRun @relation(fields: [agentRunId], references: [id], onDelete: Cascade)
+
+  @@index([agentRunId])
+}
+
+model KnowledgeDocument {
+  id        String   @id @default(uuid())
+  title     String
+  content   String   @db.Text
+  category  String   // UPI, CARD, NETBANKING, RETRY_STRATEGY, GROWTH
+  createdAt DateTime @default(now())
+}
+
+model MerchantAction {
+  id               String   @id @default(uuid())
+  recommendationId String
+  actionType       String   // APPROVED, REJECTED, IMPLEMENTED
+  feedback         String?  @db.Text
+  timestamp        DateTime @default(now())
+  
+  recommendation   Recommendation @relation(fields: [recommendationId], references: [id], onDelete: Cascade)
+
+  @@index([recommendationId])
+}
