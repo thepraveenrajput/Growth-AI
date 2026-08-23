@@ -181,9 +181,6 @@ export default function Agent() {
                 {!m.data && (
                   <div className="bg-zinc-900/40 border border-zinc-900 rounded-xl p-5 rounded-tl-none text-zinc-300 text-xs leading-relaxed">
                     {m.text}
-                    <div className="text-[8px] text-zinc-500 font-mono mt-2">
-                      {new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </div>
                   </div>
                 )}
 
