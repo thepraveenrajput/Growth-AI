@@ -33,7 +33,7 @@ export default function RootLayout({
           <div className="flex items-center gap-5">
             <Link href="/" className="flex items-center gap-2">
               <span className="text-sm font-bold text-white tracking-tight uppercase font-mono">
-                RazorGrowth AI
+                RAZORGROWTH AI
               </span>
               <span className="text-[8px] px-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded font-mono font-bold tracking-wider">
                 COPILOT
@@ -41,10 +41,9 @@ export default function RootLayout({
             </Link>
             
             <div className="hidden md:flex items-center gap-1.5 border-l border-zinc-800 pl-5">
-              <span className="text-[9px] text-zinc-500 font-mono uppercase tracking-wider">Merchant Profile</span>
+              <span className="text-[9px] text-zinc-550 font-mono uppercase tracking-wider">Merchant</span>
               <select className="bg-transparent border-0 text-[11px] font-bold text-zinc-300 focus:ring-0 focus:outline-none cursor-pointer">
                 <option value="acme">Acme Marketplace Inc.</option>
-                <option value="test">Test Account (Static Seed)</option>
               </select>
             </div>
           </div>
@@ -57,8 +56,8 @@ export default function RootLayout({
               </svg>
               <input 
                 type="text" 
-                placeholder="Search transaction IDs, segments, or opportunities..." 
-                className="w-full bg-zinc-950 border border-zinc-800 rounded-lg pl-9 pr-4 py-1.5 text-[11px] text-zinc-300 placeholder-zinc-650 focus:outline-none focus:border-zinc-700 font-mono"
+                placeholder="Search transactions, customers, or opportunities" 
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-lg pl-9 pr-4 py-1.5 text-[11px] text-zinc-300 placeholder-zinc-650 focus:outline-none focus:border-zinc-750 font-mono"
                 readOnly
               />
             </div>
@@ -67,8 +66,8 @@ export default function RootLayout({
           {/* Right Header Menu */}
           <div className="flex items-center gap-4">
             <div className="bg-zinc-950 border border-zinc-800 text-[10px] text-zinc-400 px-2.5 py-1 rounded-md font-mono flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-              <span>30 Day Feed Active</span>
+              <span className="w-1 h-1 bg-emerald-500 rounded-full" />
+              <span>Data updated 2 min ago</span>
             </div>
 
             {/* Notification Bell */}

@@ -314,37 +314,37 @@ export default function Agent() {
               );
             })}
 
-            {/* Simulated tool step indicators (Section 18 Loading skeleton) */}
+            {/* Simulated tool step indicators (Section 22 Loading skeleton) */}
             {loading && (
               <div className="border border-zinc-900 rounded bg-zinc-900/5 p-5 space-y-3 max-w-md">
-                <div className="text-[8px] font-mono text-zinc-500 uppercase tracking-widest font-bold flex items-center gap-1.5">
-                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-zinc-550" />
-                  <span>ANALYZING TRANSACTION STREAM...</span>
+                <div className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest font-bold flex items-center gap-1.5">
+                  <RefreshCw className="w-3 h-3 animate-spin text-zinc-550" />
+                  <span>Analyzing payment performance</span>
                 </div>
                 <div className="space-y-1.5 text-[10px] font-mono text-zinc-400">
                   <div className="flex items-center gap-2">
-                    <span className={currentStep >= 1 ? "text-emerald-500 font-bold" : "text-zinc-600 animate-pulse"}>
+                    <span className={currentStep >= 1 ? "text-emerald-500 font-bold" : "text-zinc-650"}>
                       {currentStep >= 1 ? "✓" : "●"}
                     </span>
-                    <span className={currentStep >= 1 ? "text-zinc-300" : "text-zinc-650"}>Loading merchant transaction metrics</span>
+                    <span className={currentStep >= 1 ? "text-zinc-300" : "text-zinc-550"}>Loading merchant metrics</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={currentStep >= 2 ? "text-emerald-500 font-bold" : "text-zinc-600 animate-pulse"}>
+                    <span className={currentStep >= 2 ? "text-emerald-500 font-bold" : "text-zinc-650"}>
                       {currentStep >= 2 ? "✓" : "●"}
                     </span>
-                    <span className={currentStep >= 2 ? "text-zinc-300" : "text-zinc-650"}>Comparing payment method conversion thresholds</span>
+                    <span className={currentStep >= 2 ? "text-zinc-300" : "text-zinc-550"}>Comparing payment methods</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={currentStep >= 3 ? "text-emerald-500 font-bold" : "text-zinc-600 animate-pulse"}>
+                    <span className={currentStep >= 3 ? "text-emerald-500 font-bold" : "text-zinc-650"}>
                       {currentStep >= 3 ? "✓" : "●"}
                     </span>
-                    <span className={currentStep >= 3 ? "text-zinc-300" : "text-zinc-650"}>Investigating failure patterns & node error reasons</span>
+                    <span className={currentStep >= 3 ? "text-zinc-300" : "text-zinc-550"}>Investigating failure patterns</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={currentStep >= 4 ? "text-emerald-500 font-bold" : "text-zinc-600 animate-pulse"}>
+                    <span className={currentStep >= 4 ? "text-emerald-500 font-bold" : "text-zinc-650"}>
                       {currentStep >= 4 ? "✓" : "●"}
                     </span>
-                    <span className={currentStep >= 4 ? "text-zinc-300" : "text-zinc-650"}>Calculating estimated revenue leakage opportunity</span>
+                    <span className={currentStep >= 4 ? "text-zinc-300" : "text-zinc-550"}>Estimating revenue impact</span>
                   </div>
                 </div>
               </div>

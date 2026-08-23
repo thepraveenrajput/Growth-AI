@@ -144,7 +144,7 @@ export default function RecommendationDetail() {
           
           {/* Section 1: What happened? */}
           <div className="space-y-2 border-b border-zinc-900 pb-5">
-            <h3 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">What Happened?</h3>
+            <h3 className="text-[10px] font-bold text-zinc-550 uppercase tracking-widest font-mono">WHAT HAPPENED</h3>
             <p className="text-xs text-zinc-350 leading-relaxed font-mono">
               {recommendation.finding}
             </p>
@@ -152,7 +152,7 @@ export default function RecommendationDetail() {
 
           {/* Section 2: Evidence (Visually dominant hourly blocks) */}
           <div className="space-y-3 border-b border-zinc-900 pb-5">
-            <h3 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Evidence Log</h3>
+            <h3 className="text-[10px] font-bold text-zinc-550 uppercase tracking-widest font-mono">EVIDENCE</h3>
             
             {isEvening ? (
               <div className="grid grid-cols-3 gap-4 max-w-md font-mono text-xs">
@@ -183,7 +183,7 @@ export default function RecommendationDetail() {
 
           {/* Section 3: Recommended Action */}
           <div className="space-y-3 border-b border-zinc-900 pb-5">
-            <h3 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Recommended Action</h3>
+            <h3 className="text-[10px] font-bold text-zinc-555 uppercase tracking-widest font-mono">RECOMMENDED ACTION</h3>
             <p className="text-xs text-zinc-350 leading-relaxed">
               {recommendation.recommendedAction}
             </p>
@@ -195,7 +195,7 @@ export default function RecommendationDetail() {
           {/* Section 4: Supporting RAG Reference Documents */}
           {relevantArticles && relevantArticles.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Reference documentation</h3>
+              <h3 className="text-[10px] font-bold text-zinc-550 uppercase tracking-widest font-mono text-zinc-500">Reference documentation</h3>
               
               <div className="space-y-2">
                 {relevantArticles.map((art: any) => {
@@ -240,7 +240,7 @@ export default function RecommendationDetail() {
                 : 'bg-rose-950/20 border-rose-900/40 text-rose-400'
             }`}>
               <div className="font-mono text-[10px]">
-                <h4 className="font-bold text-white uppercase">ACTION {recommendation.status}</h4>
+                <h4 className="font-bold text-white uppercase font-bold">ACTION {recommendation.status}</h4>
                 <p className="text-zinc-550 mt-1 leading-normal">
                   Approved playbooks are queued for API hot-routing triggers in staging.
                 </p>
@@ -259,15 +259,15 @@ export default function RecommendationDetail() {
             </div>
 
             <div className="pt-4 border-t border-zinc-900">
-              <span className="text-[9px] text-amber-500 uppercase tracking-widest font-mono block mb-1 font-semibold">Estimated Impact</span>
+              <span className="text-[9px] text-amber-500 uppercase tracking-widest font-mono block mb-1 font-semibold">ESTIMATED IMPACT</span>
               <h3 className="text-xl font-black text-amber-500 tracking-tight">
                 {formatLakhs(recommendation.estimatedOpportunity)}
               </h3>
-              <p className="text-[8px] text-zinc-550 font-mono mt-0.5">Restored payment volume potential</p>
+              <p className="text-[9px] text-zinc-500 font-mono mt-1">Based on historical transaction patterns.</p>
             </div>
 
             <div className="pt-4 border-t border-zinc-900">
-              <span className="text-[9px] text-zinc-500 uppercase tracking-widest font-mono block mb-2">Confidence Level</span>
+              <span className="text-[9px] text-zinc-500 uppercase tracking-widest font-mono block mb-2 font-semibold">Confidence Level</span>
               <div className="flex items-center gap-3">
                 <span className="text-xs font-bold text-zinc-200 font-mono">{recommendation.confidence}%</span>
                 <div className="flex-1 bg-zinc-950 h-1.5 rounded-full border border-zinc-900 overflow-hidden">
@@ -282,7 +282,7 @@ export default function RecommendationDetail() {
             <h4 className="text-[10px] font-bold text-white font-mono uppercase tracking-wider">Execute Resolution</h4>
             
             <div className="space-y-1.5">
-              <label className="text-[9px] text-zinc-550 uppercase tracking-wider font-semibold font-mono">Response Feedback message</label>
+              <label className="text-[9px] text-zinc-550 uppercase tracking-wider font-semibold font-mono font-bold">Response Feedback message</label>
               <textarea
                 value={feedbackText}
                 onChange={(e) => setFeedbackText(e.target.value)}
@@ -296,17 +296,17 @@ export default function RecommendationDetail() {
               <div className="grid grid-cols-2 gap-3 pt-2">
                 <button
                   onClick={() => handleAction('reject')}
-                  className="py-1.5 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-rose-400 rounded text-xs font-bold transition-all"
+                  className="py-1.5 border border-zinc-800 hover:border-zinc-700 text-zinc-450 hover:text-rose-400 rounded text-xs font-bold font-mono transition-all"
                   disabled={submitting}
                 >
                   Dismiss
                 </button>
                 <button
                   onClick={() => handleAction('approve')}
-                  className="py-1.5 bg-zinc-900 border border-zinc-800 hover:border-zinc-750 text-white rounded text-xs font-bold transition-all"
+                  className="py-1.5 bg-zinc-900 border border-zinc-850 hover:border-zinc-750 text-white rounded text-xs font-bold font-mono transition-all"
                   disabled={submitting}
                 >
-                  Approve resolution
+                  Approve recommendation
                 </button>
               </div>
             )}

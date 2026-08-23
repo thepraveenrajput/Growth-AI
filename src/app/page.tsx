@@ -103,8 +103,8 @@ export default function Dashboard() {
       {/* Workspace Header */}
       <div className="px-8 pt-8 pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-base font-bold text-white tracking-tight">Good morning, Merchant</h2>
-          <p className="text-xs text-zinc-400 mt-0.5">Here&apos;s what changed in your payments today.</p>
+          <h2 className="text-base font-bold text-white tracking-tight">Overview</h2>
+          <p className="text-xs text-zinc-400 mt-0.5">Merchant payment performance</p>
         </div>
 
         <div className="flex items-center gap-2">
@@ -113,9 +113,9 @@ export default function Dashboard() {
             onChange={(e) => setTimeRange(e.target.value)}
             className="bg-zinc-900 border border-zinc-800 rounded px-2.5 py-1 text-xs text-zinc-300 focus:outline-none focus:border-zinc-750 font-mono"
           >
-            <option value="7">Last 7 Days</option>
-            <option value="14">Last 14 Days</option>
-            <option value="30">Last 30 Days</option>
+            <option value="30">Last 30 days</option>
+            <option value="14">Last 14 days</option>
+            <option value="7">Last 7 days</option>
           </select>
           <button 
             onClick={fetchDashboardData}
@@ -126,30 +126,42 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* WHAT NEEDS YOUR ATTENTION (Priority Revenue Leak Alert Panel) */}
+      {/* WHAT NEEDS YOUR ATTENTION */}
       <section className="px-8 py-3">
-        <div className="bg-zinc-900 border border-zinc-800/80 rounded-lg p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1">
+        <h3 className="text-xs font-bold text-white mb-3 uppercase tracking-wider font-mono text-zinc-400">What needs your attention</h3>
+        <div className="bg-zinc-900 border border-zinc-800/85 rounded p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-2">
             <div className="flex items-center gap-2">
               <span className="text-[8px] px-1.5 py-0.5 bg-rose-500/10 text-rose-500 border border-rose-500/20 rounded font-mono font-bold tracking-wider uppercase">
-                High Priority Alert
+                HIGH PRIORITY
               </span>
-              <span className="text-[10px] text-zinc-500 font-mono">• UPI • Yesterday</span>
+              <span className="text-[9px] text-zinc-500 font-mono">• Yesterday</span>
             </div>
-            <h3 className="text-xs font-bold text-white leading-normal">
-              Payment success rate dropped 6.4% during 7–10 PM (Evening Node Congestion)
-            </h3>
-            <p className="text-[10px] text-zinc-400 font-mono">
-              Estimated affected volume: <span className="text-white font-bold">{formatLakhs(84200)}</span>
-            </p>
+            <h4 className="text-sm font-bold text-white leading-normal">
+              Payment success rate dropped during evening hours
+            </h4>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-1 font-mono text-[10px] text-zinc-400">
+              <div>
+                <span className="text-[8px] text-zinc-550 block uppercase">Success rate</span>
+                <span className="font-bold text-rose-400">94.2% → 87.8%</span>
+              </div>
+              <div>
+                <span className="text-[8px] text-zinc-550 block uppercase">Affected method</span>
+                <span className="font-bold text-zinc-200">UPI</span>
+              </div>
+              <div>
+                <span className="text-[8px] text-zinc-550 block uppercase">Affected volume</span>
+                <span className="font-bold text-zinc-200">₹84,200</span>
+              </div>
+            </div>
           </div>
           
           <div className="flex items-center gap-3">
             <Link 
               href="/agent?query=Why+did+my+payment+success+rate+fall+yesterday"
-              className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/25 text-amber-500 rounded text-xs font-bold transition-all duration-150"
+              className="px-4 py-2 bg-zinc-950 border border-zinc-800 hover:border-zinc-700 text-zinc-200 rounded text-xs font-bold transition-all duration-150"
             >
-              Investigate
+              [Investigate]
             </Link>
           </div>
         </div>
