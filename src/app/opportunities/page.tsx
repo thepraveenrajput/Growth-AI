@@ -44,34 +44,34 @@ export default function Opportunities() {
   return (
     <div className="flex-1 flex flex-col overflow-y-auto">
       {/* Header */}
-      <header className="px-8 py-6 bg-slate-900 border-b border-slate-800 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <header className="px-8 py-6 bg-zinc-900 border-b border-zinc-800 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white">Detected Growth Opportunities</h1>
-          <p className="text-xs text-slate-400">Rule-based analytical scans highlighting payment inefficiencies and revenue leakage.</p>
+          <p className="text-xs text-zinc-400">Rule-based analytical scans highlighting payment inefficiencies and revenue leakage.</p>
         </div>
         
         <button 
           onClick={fetchOpportunities}
-          className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-lg hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 px-3 py-1.5 bg-zinc-800 border border-zinc-700 text-xs text-zinc-300 rounded-lg hover:text-white transition-colors"
         >
           <RefreshCw className="w-3.5 h-3.5" /> Re-scan Database
         </button>
       </header>
 
       {/* Filter panel */}
-      <section className="px-8 py-4 bg-slate-900/50 border-b border-slate-800/80 flex flex-wrap items-center gap-6">
-        <div className="flex items-center gap-2 text-xs text-slate-400">
-          <Filter className="w-3.5 h-3.5 text-slate-500" />
+      <section className="px-8 py-4 bg-zinc-900/50 border-b border-zinc-800/80 flex flex-wrap items-center gap-6">
+        <div className="flex items-center gap-2 text-xs text-zinc-400">
+          <Filter className="w-3.5 h-3.5 text-zinc-500" />
           <span>Filter Opportunities:</span>
         </div>
 
         {/* Severity */}
         <div className="flex items-center gap-1.5">
-          <span className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Severity</span>
+          <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Severity</span>
           <select
             value={severityFilter}
             onChange={(e) => setSeverityFilter(e.target.value)}
-            className="bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-slate-300 focus:outline-none focus:border-violet-500"
+            className="bg-zinc-800 border border-zinc-700 rounded-lg px-2.5 py-1 text-xs text-zinc-300 focus:outline-none focus:border-violet-500"
           >
             <option value="ALL">All Severities</option>
             <option value="HIGH">High Severity</option>
@@ -82,11 +82,11 @@ export default function Opportunities() {
 
         {/* Status */}
         <div className="flex items-center gap-1.5">
-          <span className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Status</span>
+          <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Status</span>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-slate-300 focus:outline-none focus:border-violet-500"
+            className="bg-zinc-800 border border-zinc-700 rounded-lg px-2.5 py-1 text-xs text-zinc-300 focus:outline-none focus:border-violet-500"
           >
             <option value="ALL">All Statuses</option>
             <option value="DETECTED">Detected</option>
@@ -99,18 +99,18 @@ export default function Opportunities() {
       {/* Main List */}
       <section className="p-8 flex-1">
         {loading ? (
-          <div className="flex justify-center items-center h-64 text-slate-500">
-            <RefreshCw className="w-6 h-6 animate-spin text-violet-500 mr-2" />
+          <div className="flex justify-center items-center h-64 text-zinc-500">
+            <RefreshCw className="w-6 h-6 animate-spin text-zinc-400 mr-2" />
             <span className="text-xs">Running rules-based diagnostic checks...</span>
           </div>
         ) : error ? (
-          <div className="bg-rose-950/20 border border-rose-900/50 rounded-xl p-6 text-center text-slate-400 max-w-lg mx-auto">
+          <div className="bg-rose-950/20 border border-rose-900/50 rounded-xl p-6 text-center text-zinc-400 max-w-lg mx-auto">
             <p className="text-sm mb-4">{error}</p>
-            <button onClick={fetchOpportunities} className="px-3 py-1.5 bg-slate-800 border border-slate-700 rounded text-xs text-white">Retry</button>
+            <button onClick={fetchOpportunities} className="px-3 py-1.5 bg-zinc-800 border border-zinc-700 rounded text-xs text-white">Retry</button>
           </div>
         ) : filteredOpportunities.length === 0 ? (
-          <div className="bg-slate-900/30 border border-slate-800/80 rounded-xl p-12 text-center text-slate-500 max-w-md mx-auto">
-            <CheckCircle2 className="w-12 h-12 text-slate-700 mx-auto mb-4" />
+          <div className="bg-zinc-900/30 border border-zinc-800/80 rounded-xl p-12 text-center text-zinc-500 max-w-md mx-auto">
+            <CheckCircle2 className="w-12 h-12 text-zinc-700 mx-auto mb-4" />
             <h4 className="text-white font-semibold text-sm mb-1">No Active Opportunities</h4>
             <p className="text-xs">Your payment configurations are working within normal baseline success ranges.</p>
           </div>
@@ -124,9 +124,9 @@ export default function Opportunities() {
               return (
                 <div 
                   key={o.id}
-                  className={`bg-slate-900 border rounded-xl p-6 flex flex-col justify-between shadow-xl transition-all duration-300 hover:border-slate-700 hover:shadow-2xl ${
-                    isActioned ? 'border-slate-800/50 opacity-75' :
-                    isHigh ? 'border-rose-950/40 hover:border-rose-900/60' : 'border-slate-800'
+                  className={`bg-zinc-900 border rounded-xl p-6 flex flex-col justify-between shadow-xl transition-all duration-300 hover:border-zinc-700 hover:shadow-2xl ${
+                    isActioned ? 'border-zinc-800/50 opacity-75' :
+                    isHigh ? 'border-rose-950/40 hover:border-rose-900/60' : 'border-zinc-800'
                   }`}
                 >
                   <div>
@@ -137,13 +137,13 @@ export default function Opportunities() {
                         <span className={`text-[9px] px-2 py-0.5 rounded font-mono font-bold border ${
                           o.severity === 'HIGH' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' :
                           o.severity === 'MEDIUM' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
-                          'bg-slate-500/10 text-slate-400 border-slate-500/20'
+                          'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'
                         }`}>
                           {o.severity} SEVERITY
                         </span>
                         
                         {/* Priority badge */}
-                        <span className="text-[9px] px-2 py-0.5 rounded font-mono bg-slate-800 text-slate-400 border border-slate-700">
+                        <span className="text-[9px] px-2 py-0.5 rounded font-mono bg-zinc-800 text-zinc-400 border border-zinc-700">
                           {o.priority} PRIORITY
                         </span>
                       </div>
@@ -151,7 +151,7 @@ export default function Opportunities() {
                       {/* Status */}
                       <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
                         isActioned ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/25' :
-                        o.status === 'INVESTIGATING' ? 'bg-violet-500/10 text-violet-400 border border-violet-500/25 animate-pulse' :
+                        o.status === 'INVESTIGATING' ? 'bg-zinc-800 text-zinc-300 border border-zinc-700 animate-pulse' :
                         'bg-blue-500/10 text-blue-400 border border-blue-500/25'
                       }`}>
                         {o.status}
@@ -163,22 +163,22 @@ export default function Opportunities() {
                     
                     {/* Finding Summary */}
                     {recommendation && (
-                      <p className="text-xs text-slate-400 line-clamp-2 mb-4 leading-relaxed">
+                      <p className="text-xs text-zinc-400 line-clamp-2 mb-4 leading-relaxed">
                         {recommendation.finding}
                       </p>
                     )}
 
                     {/* Metrics Box */}
-                    <div className="grid grid-cols-2 gap-4 bg-slate-950/60 rounded-lg p-3.5 border border-slate-800/80 mb-6">
+                    <div className="grid grid-cols-2 gap-4 bg-zinc-950/60 rounded-lg p-3.5 border border-zinc-800/80 mb-6">
                       <div>
-                        <span className="text-[10px] text-slate-500 block uppercase font-mono font-medium tracking-wider">Revenue leak (Est.)</span>
-                        <span className={`text-sm font-bold ${isHigh && !isActioned ? 'text-rose-400' : 'text-slate-200'}`}>
+                        <span className="text-[10px] text-zinc-500 block uppercase font-mono font-medium tracking-wider">Revenue leak (Est.)</span>
+                        <span className={`text-sm font-bold ${isHigh && !isActioned ? 'text-rose-400' : 'text-zinc-200'}`}>
                           ₹{o.estimatedValue.toLocaleString('en-IN')}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-500 block uppercase font-mono font-medium tracking-wider">Affected orders</span>
-                        <span className="text-sm font-bold text-slate-200">
+                        <span className="text-[10px] text-zinc-500 block uppercase font-mono font-medium tracking-wider">Affected orders</span>
+                        <span className="text-sm font-bold text-zinc-200">
                           {o.affectedCount.toLocaleString()}
                         </span>
                       </div>
@@ -186,8 +186,8 @@ export default function Opportunities() {
                   </div>
 
                   {/* Actions footer */}
-                  <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between mt-auto">
-                    <span className="text-[9px] text-slate-500 font-mono">
+                  <div className="pt-4 border-t border-zinc-800/80 flex items-center justify-between mt-auto">
+                    <span className="text-[9px] text-zinc-500 font-mono">
                       Detected: {new Date(o.timestamp).toLocaleDateString()}
                     </span>
 
@@ -196,8 +196,8 @@ export default function Opportunities() {
                         href={`/recommendations/${recommendation.id}`}
                         className={`inline-flex items-center gap-1.5 text-xs font-bold transition-all px-3.5 py-1.8 rounded-lg ${
                           isActioned 
-                            ? 'bg-slate-800 text-slate-400 border border-slate-700' 
-                            : 'bg-indigo-600 text-white hover:bg-indigo-500 hover:shadow-lg hover:shadow-indigo-600/20'
+                            ? 'bg-zinc-800 text-zinc-400 border border-zinc-700' 
+                            : 'bg-zinc-800 border border-zinc-700 text-white hover:bg-zinc-700 hover:text-white hover:shadow-lg hover:shadow-zinc-950/20'
                         }`}
                       >
                         {isActioned ? 'Review Action' : 'View AI Recommendation'} <ChevronRight className="w-3.5 h-3.5" />
@@ -205,7 +205,7 @@ export default function Opportunities() {
                     ) : (
                       <Link 
                         href="/agent"
-                        className="inline-flex items-center gap-1 text-xs font-bold text-indigo-400 hover:underline"
+                        className="inline-flex items-center gap-1 text-xs font-bold text-zinc-300 hover:underline"
                       >
                         Investigate with AI Agent <ArrowRight className="w-3.5 h-3.5" />
                       </Link>

@@ -53,16 +53,16 @@ export default function Dashboard() {
 
   // Color constants for charts
   const colors = {
-    primary: '#6366f1', // Indigo
+    primary: '#71717a', // Indigo
     success: '#10b981', // Emerald
     failed: '#ef4444', // Rose
     warning: '#f59e0b', // Amber
     neutral: '#94a3b8', // Slate
-    purple: '#8b5cf6', // Violet
+    purple: '#d4d4d8', // Violet
   };
 
   const paymentMethodColors: { [key: string]: string } = {
-    UPI: '#8b5cf6',
+    UPI: '#52525b',
     CARD: '#10b981',
     NETBANKING: '#ef4444',
     WALLET: '#f59e0b',
@@ -70,8 +70,8 @@ export default function Dashboard() {
 
   if (loading && !data) {
     return (
-      <div className="flex-1 flex flex-col justify-center items-center h-full bg-slate-950 text-slate-400">
-        <RefreshCw className="w-10 h-10 animate-spin text-violet-500 mb-4" />
+      <div className="flex-1 flex flex-col justify-center items-center h-full bg-zinc-950 text-zinc-400">
+        <RefreshCw className="w-10 h-10 animate-spin text-zinc-400 mb-4" />
         <p className="text-sm font-medium">Assembling payment intelligence...</p>
       </div>
     );
@@ -79,13 +79,13 @@ export default function Dashboard() {
 
   if (error) {
     return (
-      <div className="flex-1 flex flex-col justify-center items-center h-full bg-slate-950 p-6">
+      <div className="flex-1 flex flex-col justify-center items-center h-full bg-zinc-950 p-6">
         <AlertCircle className="w-12 h-12 text-rose-500 mb-4" />
         <h3 className="text-lg font-bold text-white mb-2">Failed to Load Dashboard</h3>
-        <p className="text-slate-400 text-sm text-center max-w-md mb-6">{error}</p>
+        <p className="text-zinc-400 text-sm text-center max-w-md mb-6">{error}</p>
         <button 
           onClick={fetchDashboardData}
-          className="px-4 py-2 bg-slate-800 border border-slate-700 text-white rounded-lg hover:bg-slate-700 text-sm font-medium transition-colors"
+          className="px-4 py-2 bg-zinc-800 border border-zinc-700 text-white rounded-lg hover:bg-zinc-700 text-sm font-medium transition-colors"
         >
           Try Again
         </button>
@@ -98,10 +98,10 @@ export default function Dashboard() {
   return (
     <div className="flex-1 flex flex-col overflow-y-auto">
       {/* Header Panel */}
-      <header className="px-8 py-6 bg-slate-900 border-b border-slate-800 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <header className="px-8 py-6 bg-zinc-900 border-b border-zinc-800 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white">Merchant Growth Dashboard</h1>
-          <p className="text-xs text-slate-400">Deterministic transaction diagnostics and real-time growth analytics.</p>
+          <p className="text-xs text-zinc-400">Deterministic transaction diagnostics and real-time growth analytics.</p>
         </div>
 
         {/* Filter bar */}
@@ -111,7 +111,7 @@ export default function Dashboard() {
             <select
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value)}
-              className="bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-violet-500"
+              className="bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-1.5 text-xs text-zinc-300 focus:outline-none focus:border-violet-500"
             >
               <option value="7">Last 7 Days</option>
               <option value="14">Last 14 Days</option>
@@ -124,7 +124,7 @@ export default function Dashboard() {
             <select
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value)}
-              className="bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-violet-500"
+              className="bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-1.5 text-xs text-zinc-300 focus:outline-none focus:border-violet-500"
             >
               <option value="">All Payment Methods</option>
               <option value="UPI">UPI</option>
@@ -139,7 +139,7 @@ export default function Dashboard() {
             <select
               value={segment}
               onChange={(e) => setSegment(e.target.value)}
-              className="bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-violet-500"
+              className="bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-1.5 text-xs text-zinc-300 focus:outline-none focus:border-violet-500"
             >
               <option value="">All Segments</option>
               <option value="SMB">SMB Customers</option>
@@ -150,7 +150,7 @@ export default function Dashboard() {
 
           <button 
             onClick={fetchDashboardData}
-            className="p-1.5 bg-slate-800 border border-slate-700 text-slate-300 rounded-lg hover:text-white transition-colors"
+            className="p-1.5 bg-zinc-800 border border-zinc-700 text-zinc-300 rounded-lg hover:text-white transition-colors"
             title="Refresh statistics"
           >
             <RefreshCw className="w-4 h-4" />
@@ -161,40 +161,40 @@ export default function Dashboard() {
       {/* Analytics Summary KPI Cards */}
       <section className="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
         {/* Total attempted volume */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col justify-between shadow-lg">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold text-slate-400">Total Volume</span>
-            <DollarSign className="w-4 h-4 text-slate-500" />
+            <span className="text-xs font-semibold text-zinc-400">Total Volume</span>
+            <DollarSign className="w-4 h-4 text-zinc-500" />
           </div>
           <div className="mt-4">
             <h3 className="text-lg font-bold text-white">₹{summary.totalVolume.toLocaleString('en-IN')}</h3>
-            <p className="text-[10px] text-slate-500 mt-1">{summary.transactionCount.toLocaleString()} transactions</p>
+            <p className="text-[10px] text-zinc-500 mt-1">{summary.transactionCount.toLocaleString()} transactions</p>
           </div>
         </div>
 
         {/* Realized Volume */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col justify-between shadow-lg">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold text-slate-400">Successful GMV</span>
+            <span className="text-xs font-semibold text-zinc-400">Successful GMV</span>
             <CheckCircle className="w-4 h-4 text-emerald-500" />
           </div>
           <div className="mt-4">
             <h3 className="text-lg font-bold text-emerald-400">₹{summary.successfulVolume.toLocaleString('en-IN')}</h3>
-            <p className="text-[10px] text-slate-500 mt-1">{summary.successfulCount.toLocaleString()} successful</p>
+            <p className="text-[10px] text-zinc-500 mt-1">{summary.successfulCount.toLocaleString()} successful</p>
           </div>
         </div>
 
         {/* Success Rate */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col justify-between shadow-lg">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold text-slate-400">Success Rate</span>
-            <Activity className="w-4 h-4 text-indigo-400" />
+            <span className="text-xs font-semibold text-zinc-400">Success Rate</span>
+            <Activity className="w-4 h-4 text-zinc-300" />
           </div>
           <div className="mt-4">
             <h3 className="text-2xl font-black text-white">{summary.successRate}%</h3>
-            <div className="w-full bg-slate-800 rounded-full h-1.5 mt-2 overflow-hidden">
+            <div className="w-full bg-zinc-800 rounded-full h-1.5 mt-2 overflow-hidden">
               <div 
-                className="bg-indigo-500 h-1.5 rounded-full" 
+                className="bg-zinc-600 h-1.5 rounded-full" 
                 style={{ width: `${summary.successRate}%` }}
               />
             </div>
@@ -202,41 +202,41 @@ export default function Dashboard() {
         </div>
 
         {/* Failed Volume */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col justify-between shadow-lg">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold text-slate-400">Failed Volume</span>
+            <span className="text-xs font-semibold text-zinc-400">Failed Volume</span>
             <XCircle className="w-4 h-4 text-rose-500" />
           </div>
           <div className="mt-4">
             <h3 className="text-lg font-bold text-rose-400">₹{summary.failedVolume.toLocaleString('en-IN')}</h3>
-            <p className="text-[10px] text-slate-500 mt-1">{summary.failedCount.toLocaleString()} failures</p>
+            <p className="text-[10px] text-zinc-500 mt-1">{summary.failedCount.toLocaleString()} failures</p>
           </div>
         </div>
 
         {/* ATV */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col justify-between shadow-lg">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold text-slate-400">Avg Ticket Size</span>
+            <span className="text-xs font-semibold text-zinc-400">Avg Ticket Size</span>
             <TrendingUp className="w-4 h-4 text-amber-500" />
           </div>
           <div className="mt-4">
             <h3 className="text-lg font-bold text-white">₹{summary.averageTransactionValue.toLocaleString('en-IN')}</h3>
-            <p className="text-[10px] text-slate-500 mt-1">Median: ₹{summary.medianTransactionValue.toLocaleString('en-IN')}</p>
+            <p className="text-[10px] text-zinc-500 mt-1">Median: ₹{summary.medianTransactionValue.toLocaleString('en-IN')}</p>
           </div>
         </div>
 
         {/* Potential Revenue Opportunity */}
-        <div className="bg-slate-900 border border-indigo-900/60 rounded-xl p-5 flex flex-col justify-between shadow-lg relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-xl group-hover:bg-indigo-500/10 transition-colors" />
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col justify-between shadow-lg relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-zinc-600/5 rounded-full blur-xl group-hover:bg-zinc-700 hover:text-white/10 transition-colors" />
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold text-indigo-300">Revenue Opportunity</span>
+            <span className="text-xs font-semibold text-zinc-200">Revenue Opportunity</span>
             <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
           </div>
           <div className="mt-4 z-10">
-            <h3 className="text-lg font-extrabold text-indigo-300">₹{summary.potentialRevenueOpportunity.toLocaleString('en-IN')}</h3>
+            <h3 className="text-lg font-extrabold text-zinc-200">₹{summary.potentialRevenueOpportunity.toLocaleString('en-IN')}</h3>
             <Link 
               href="/opportunities" 
-              className="inline-flex items-center gap-1 text-[10px] font-semibold text-indigo-400 hover:text-indigo-300 mt-2 transition-colors"
+              className="inline-flex items-center gap-1 text-[10px] font-semibold text-zinc-300 hover:text-zinc-200 mt-2 transition-colors"
             >
               Analyze Leakage <ArrowUpRight className="w-3 h-3" />
             </Link>
@@ -247,11 +247,11 @@ export default function Dashboard() {
       {/* Charts Grid */}
       <section className="px-8 pb-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Realized Volume Area Chart (2 columns wide) */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 lg:col-span-2 shadow-lg flex flex-col">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 lg:col-span-2 shadow-lg flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <div>
               <h3 className="text-sm font-bold text-white">Realized GMV & Success Rate Trend</h3>
-              <p className="text-[10px] text-slate-500">Daily breakdown of successful checkout transactions.</p>
+              <p className="text-[10px] text-zinc-500">Daily breakdown of successful checkout transactions.</p>
             </div>
           </div>
           <div className="h-72 w-full">
@@ -290,36 +290,36 @@ export default function Dashboard() {
         </div>
 
         {/* Failure Reason Breakdown (List / Progress Bar format) */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg flex flex-col justify-between">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-lg flex flex-col justify-between">
           <div>
             <h3 className="text-sm font-bold text-white">Failure Reasons Breakdown</h3>
-            <p className="text-[10px] text-slate-500 mb-6">Distribution of transactional failure error states.</p>
+            <p className="text-[10px] text-zinc-500 mb-6">Distribution of transactional failure error states.</p>
             
             {failureReasons.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-48 text-slate-600">
-                <CheckCircle className="w-8 h-8 text-slate-700 mb-2" />
+              <div className="flex flex-col items-center justify-center h-48 text-zinc-600">
+                <CheckCircle className="w-8 h-8 text-zinc-700 mb-2" />
                 <p className="text-xs">No transaction failures recorded.</p>
               </div>
             ) : (
               <div className="space-y-4">
                 {failureReasons.slice(0, 5).map((f: any, idx: number) => {
-                  let badgeColor = 'bg-slate-800 text-slate-400';
+                  let badgeColor = 'bg-zinc-800 text-zinc-400';
                   if (f.reason === 'BANK_DEGRADED') badgeColor = 'bg-rose-500/10 text-rose-400 border border-rose-500/20';
                   if (f.reason === 'INSUFFICIENT_FUNDS') badgeColor = 'bg-amber-500/10 text-amber-400 border border-amber-500/20';
-                  if (f.reason === 'USER_ABORTED') badgeColor = 'bg-slate-500/10 text-slate-400 border border-slate-500/20';
+                  if (f.reason === 'USER_ABORTED') badgeColor = 'bg-zinc-500/10 text-zinc-400 border border-zinc-500/20';
 
                   return (
                     <div key={idx} className="text-xs">
                       <div className="flex justify-between items-center mb-1">
-                        <span className="font-semibold text-slate-300 font-mono">{f.reason}</span>
-                        <span className="text-[10px] text-slate-500">{f.count.toLocaleString()} ({f.percentage}%)</span>
+                        <span className="font-semibold text-zinc-300 font-mono">{f.reason}</span>
+                        <span className="text-[10px] text-zinc-500">{f.count.toLocaleString()} ({f.percentage}%)</span>
                       </div>
-                      <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                      <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
                         <div 
                           className={`h-1.5 rounded-full ${
                             f.reason === 'BANK_DEGRADED' ? 'bg-rose-500' :
                             f.reason === 'INSUFFICIENT_FUNDS' ? 'bg-amber-500' :
-                            'bg-slate-500'
+                            'bg-zinc-500'
                           }`}
                           style={{ width: `${f.percentage}%` }}
                         />
@@ -331,9 +331,9 @@ export default function Dashboard() {
             )}
           </div>
           
-          <div className="pt-4 border-t border-slate-800 mt-4 flex items-center justify-between text-[10px] text-slate-500">
+          <div className="pt-4 border-t border-zinc-800 mt-4 flex items-center justify-between text-[10px] text-zinc-500">
             <span>Critical errors: <b>BANK_DEGRADED</b></span>
-            <Link href="/agent" className="text-indigo-400 font-medium hover:underline">Ask AI to investigate</Link>
+            <Link href="/agent" className="text-zinc-300 font-medium hover:underline">Ask AI to investigate</Link>
           </div>
         </div>
       </section>
@@ -341,10 +341,10 @@ export default function Dashboard() {
       {/* Hourly and Payment Method Grid */}
       <section className="px-8 pb-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Hourly success rates (UPI Peak degradation) */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg flex flex-col">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-lg flex flex-col">
           <div>
             <h3 className="text-sm font-bold text-white">Hourly Success Rate Distribution</h3>
-            <p className="text-[10px] text-slate-500 mb-6">Success performance by hour of day (0-23) — highlights evening drops.</p>
+            <p className="text-[10px] text-zinc-500 mb-6">Success performance by hour of day (0-23) — highlights evening drops.</p>
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -364,10 +364,10 @@ export default function Dashboard() {
         </div>
 
         {/* Payment Method success rates bar chart */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg flex flex-col">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-lg flex flex-col">
           <div>
             <h3 className="text-sm font-bold text-white">Performance by Payment Method</h3>
-            <p className="text-[10px] text-slate-500 mb-6">Success rate percentage and transaction volume breakdown.</p>
+            <p className="text-[10px] text-zinc-500 mb-6">Success rate percentage and transaction volume breakdown.</p>
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">

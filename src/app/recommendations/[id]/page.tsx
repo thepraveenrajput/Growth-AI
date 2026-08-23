@@ -74,8 +74,8 @@ export default function RecommendationDetail() {
 
   if (loading && !data) {
     return (
-      <div className="flex-1 flex flex-col justify-center items-center h-full bg-slate-950 text-slate-400">
-        <RefreshCw className="w-10 h-10 animate-spin text-violet-500 mb-4" />
+      <div className="flex-1 flex flex-col justify-center items-center h-full bg-zinc-950 text-zinc-400">
+        <RefreshCw className="w-10 h-10 animate-spin text-zinc-400 mb-4" />
         <p className="text-sm font-medium">Fetching recommendation profiles & knowledge articles...</p>
       </div>
     );
@@ -83,13 +83,13 @@ export default function RecommendationDetail() {
 
   if (error || !data) {
     return (
-      <div className="flex-1 flex flex-col justify-center items-center h-full bg-slate-950 p-6">
+      <div className="flex-1 flex flex-col justify-center items-center h-full bg-zinc-950 p-6">
         <AlertCircle className="w-12 h-12 text-rose-500 mb-4" />
         <h3 className="text-lg font-bold text-white mb-2">Error Loading Recommendation</h3>
-        <p className="text-slate-400 text-sm mb-6">{error || 'Record not found'}</p>
+        <p className="text-zinc-400 text-sm mb-6">{error || 'Record not found'}</p>
         <Link 
           href="/opportunities"
-          className="px-4 py-2 bg-slate-800 border border-slate-700 text-white rounded-lg hover:bg-slate-700 text-sm font-medium transition-colors"
+          className="px-4 py-2 bg-zinc-800 border border-zinc-700 text-white rounded-lg hover:bg-zinc-700 text-sm font-medium transition-colors"
         >
           Back to Opportunities
         </Link>
@@ -105,16 +105,16 @@ export default function RecommendationDetail() {
   return (
     <div className="flex-1 flex flex-col overflow-y-auto">
       {/* Header */}
-      <header className="px-8 py-5 bg-slate-900 border-b border-slate-800 flex items-center gap-4 flex-shrink-0">
+      <header className="px-8 py-5 bg-zinc-900 border-b border-zinc-800 flex items-center gap-4 flex-shrink-0">
         <button 
           onClick={() => router.back()}
-          className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors"
+          className="p-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
         </button>
         <div>
           <h1 className="text-lg font-bold text-white">AI Recommendation Analysis</h1>
-          <p className="text-[10px] text-slate-400">Detailed diagnostic findings, supporting data trails, and RAG knowledge reference documents.</p>
+          <p className="text-[10px] text-zinc-400">Detailed diagnostic findings, supporting data trails, and RAG knowledge reference documents.</p>
         </div>
       </header>
 
@@ -124,39 +124,39 @@ export default function RecommendationDetail() {
         <div className="lg:col-span-2 space-y-6">
           
           {/* Finding box */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg">
-            <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-3">Diagnostic Finding</h3>
-            <p className="text-sm font-bold text-slate-100 leading-snug">{recommendation.finding}</p>
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-lg">
+            <h3 className="text-xs font-bold text-zinc-300 uppercase tracking-widest mb-3">Diagnostic Finding</h3>
+            <p className="text-sm font-bold text-zinc-100 leading-snug">{recommendation.finding}</p>
           </div>
 
           {/* Evidence box */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg">
-            <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-3">Supporting Evidence</h3>
-            <div className="text-xs text-slate-300 whitespace-pre-wrap leading-relaxed">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-lg">
+            <h3 className="text-xs font-bold text-zinc-300 uppercase tracking-widest mb-3">Supporting Evidence</h3>
+            <div className="text-xs text-zinc-300 whitespace-pre-wrap leading-relaxed">
               {recommendation.evidence}
             </div>
           </div>
 
           {/* Cause and Remediation */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg space-y-5">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-lg space-y-5">
             <div>
-              <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2">Likely Cause</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">{recommendation.likelyCause}</p>
+              <h3 className="text-xs font-bold text-zinc-300 uppercase tracking-widest mb-2">Likely Cause</h3>
+              <p className="text-xs text-zinc-300 leading-relaxed">{recommendation.likelyCause}</p>
             </div>
-            <div className="pt-4 border-t border-slate-800">
-              <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2">Recommended Action</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">{recommendation.recommendedAction}</p>
+            <div className="pt-4 border-t border-zinc-800">
+              <h3 className="text-xs font-bold text-zinc-300 uppercase tracking-widest mb-2">Recommended Action</h3>
+              <p className="text-xs text-zinc-300 leading-relaxed">{recommendation.recommendedAction}</p>
             </div>
           </div>
 
           {/* Supporting RAG Knowledge Articles */}
           {relevantArticles && relevantArticles.length > 0 && (
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg">
-              <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-800">
-                <FileText className="w-4 h-4 text-indigo-400" />
+            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-lg">
+              <div className="flex items-center gap-2 mb-4 pb-2 border-b border-zinc-800">
+                <FileText className="w-4 h-4 text-zinc-300" />
                 <h3 className="text-sm font-bold text-white">Supporting Payment Guides (RAG Context)</h3>
               </div>
-              <p className="text-[10px] text-slate-500 mb-4">
+              <p className="text-[10px] text-zinc-500 mb-4">
                 These articles were dynamically pulled from our internal payment knowledge base by matching prompt keywords to provide context-aware solutions.
               </p>
               
@@ -164,22 +164,22 @@ export default function RecommendationDetail() {
                 {relevantArticles.map((art: any) => {
                   const isExpanded = !!expandedArticles[art.id];
                   return (
-                    <div key={art.id} className="border border-slate-800 rounded-lg bg-slate-950/60 overflow-hidden">
+                    <div key={art.id} className="border border-zinc-800 rounded-lg bg-zinc-950/60 overflow-hidden">
                       <button
                         onClick={() => toggleArticle(art.id)}
-                        className="w-full px-4 py-2.5 bg-slate-950 flex justify-between items-center text-xs font-bold text-slate-200 hover:bg-slate-900 transition-colors"
+                        className="w-full px-4 py-2.5 bg-zinc-950 flex justify-between items-center text-xs font-bold text-zinc-200 hover:bg-zinc-900 transition-colors"
                       >
                         <span className="flex items-center gap-2">
-                          <span className="text-[9px] px-1.5 py-0.5 rounded bg-violet-500/10 text-violet-400 border border-violet-500/20 font-mono font-bold uppercase">
+                          <span className="text-[9px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700 font-mono font-bold uppercase">
                             {art.category}
                           </span>
                           {art.title}
                         </span>
-                        {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
+                        {isExpanded ? <ChevronUp className="w-4 h-4 text-zinc-500" /> : <ChevronDown className="w-4 h-4 text-zinc-500" />}
                       </button>
                       
                       {isExpanded && (
-                        <div className="p-4 border-t border-slate-850 text-xs text-slate-400 leading-relaxed prose prose-invert max-w-none prose-sm">
+                        <div className="p-4 border-t border-zinc-850 text-xs text-zinc-400 leading-relaxed prose prose-invert max-w-none prose-sm">
                           <div className="whitespace-pre-wrap">{art.content}</div>
                         </div>
                       )}
@@ -204,7 +204,7 @@ export default function RecommendationDetail() {
               {isApproved ? <Check className="w-5 h-5 mt-0.5" /> : <X className="w-5 h-5 mt-0.5" />}
               <div>
                 <h4 className="text-xs font-bold text-white">Recommendation {recommendation.status}</h4>
-                <p className="text-[10px] text-slate-400 mt-1">
+                <p className="text-[10px] text-zinc-400 mt-1">
                   This recommendation has been actioned by the merchant. The corresponding opportunity status is updated.
                 </p>
               </div>
@@ -212,37 +212,37 @@ export default function RecommendationDetail() {
           )}
 
           {/* Impact and metrics */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg space-y-6">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-lg space-y-6">
             <div>
-              <span className="text-[9px] text-slate-500 uppercase tracking-widest font-mono block mb-1">Expected Opportunity</span>
+              <span className="text-[9px] text-zinc-500 uppercase tracking-widest font-mono block mb-1">Expected Opportunity</span>
               <h3 className="text-2xl font-black text-emerald-400">
                 ₹{recommendation.estimatedOpportunity.toLocaleString('en-IN')}
               </h3>
-              <p className="text-[10px] text-slate-500 mt-1">Restorable payment volume leak.</p>
+              <p className="text-[10px] text-zinc-500 mt-1">Restorable payment volume leak.</p>
             </div>
             
-            <div className="pt-4 border-t border-slate-800">
-              <span className="text-[9px] text-slate-500 uppercase tracking-widest font-mono block mb-2">Confidence Level</span>
+            <div className="pt-4 border-t border-zinc-800">
+              <span className="text-[9px] text-zinc-500 uppercase tracking-widest font-mono block mb-2">Confidence Level</span>
               <div className="flex items-center gap-3">
                 <div className="text-lg font-bold text-white">{recommendation.confidence}%</div>
-                <div className="flex-1 bg-slate-800 h-2 rounded-full overflow-hidden">
-                  <div className="bg-indigo-500 h-2 rounded-full" style={{ width: `${recommendation.confidence}%` }} />
+                <div className="flex-1 bg-zinc-800 h-2 rounded-full overflow-hidden">
+                  <div className="bg-zinc-600 h-2 rounded-full" style={{ width: `${recommendation.confidence}%` }} />
                 </div>
               </div>
             </div>
           </div>
 
           {/* Action form panel */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg space-y-4">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-lg space-y-4">
             <h4 className="text-xs font-bold text-white">Decision Support Workflow</h4>
             
             <div className="space-y-1.5">
-              <label className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Merchant Action Notes</label>
+              <label className="text-[10px] text-zinc-400 uppercase tracking-wider font-semibold">Merchant Action Notes</label>
               <textarea
                 value={feedbackText}
                 onChange={(e) => setFeedbackText(e.target.value)}
                 placeholder="Optional notes: e.g. Contacting engineering to configure secondary PSP handles."
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 h-24 resize-none"
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-indigo-500 h-24 resize-none"
                 disabled={isActioned || submitting}
               />
             </div>
@@ -251,14 +251,14 @@ export default function RecommendationDetail() {
               <div className="grid grid-cols-2 gap-3 pt-2">
                 <button
                   onClick={() => handleAction('reject')}
-                  className="py-2 border border-slate-850 hover:border-slate-700 text-slate-400 hover:text-rose-400 rounded-lg text-xs font-bold transition-all"
+                  className="py-2 border border-zinc-850 hover:border-zinc-700 text-zinc-400 hover:text-rose-400 rounded-lg text-xs font-bold transition-all"
                   disabled={submitting}
                 >
                   Reject
                 </button>
                 <button
                   onClick={() => handleAction('approve')}
-                  className="py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold transition-all shadow-lg shadow-indigo-600/10"
+                  className="py-2 bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 hover:text-white text-white rounded-lg text-xs font-bold transition-all shadow-lg shadow-zinc-950/20"
                   disabled={submitting}
                 >
                   Approve Action

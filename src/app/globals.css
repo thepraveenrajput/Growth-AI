@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #090d16;
-  --foreground: #f1f5f9;
-  --card-bg: #111827;
-  --card-border: #1f2937;
-  --accent: #6366f1;
+  --background: #09090b; /* Zinc 950 */
+  --foreground: #f4f4f5; /* Zinc 100 */
+  --card-bg: #18181b;     /* Zinc 900 */
+  --card-border: #27272a; /* Zinc 800 */
+  --accent: #fafafa;      /* Zinc 50 */
 }
 
 @theme inline {
@@ -27,36 +27,36 @@ body {
 
 /* Custom premium styling scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #09090b;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 4px;
+  background: #27272a;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #3f3f46;
 }
 
-/* Accent gradients */
+/* Grayscale Human-Crafted Accents */
 .gradient-text {
-  background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #18181b 0%, #09090b 100%);
 }
 
 .glass-panel {
-  background: rgba(17, 24, 39, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(24, 24, 27, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
